@@ -1,7 +1,7 @@
 /*
  * Server TCP/IP Multiple-Client Forking.
  * Author : Vram Voskanyan
- * Review : Koriun Aslanyan, Haik Akopian,
+ * Review : Koriun Aslanyan.
  */
 #include <iostream>
 #include <stdio.h>
@@ -79,15 +79,14 @@ void* dataReceiver(void *ptr) {
 		// reply to the client
 		char replyText[] = "Packet received!";
 		strncpy(buffer, replyText, strlen(replyText) + 1);
-		printf("Replying with: %s\n", buffer);
-
-		send(clientSocket, buffer, strlen(replyText), 0);
+		//printf("Replying with: %s\n", buffer);
+		printf("NO Replying : %s\n", buffer);
+		//send(clientSocket, buffer, strlen(replyText), 0);
 	}
 	// close the connection to the client before exit
 	close(clientSocket);
 	/*
 	 * TODO: Delete all client information from "clientSockets" vector.
-	 * don't necessary Vram
 	 */
 	exit (EXIT_SUCCESS);
 }
@@ -126,13 +125,11 @@ void connectionAccepting() {
 		char *clientAddress = inet_ntoa(clientData.sin_addr);
 		int clientPort = ntohs(clientData.sin_port);
 		printf("Accepted Connection from: %s:%d\n", clientAddress, clientPort);
-
-		/*
+				/*
 		 * TODO before fork() take to global std::vector<int> connected client
 		 * socket parameters.
 		 * And ask it from dataSender() function.
 		 */
-
 		// fork off into another process
 		// this creates another process with the identical program state
 		// except that pid == 0 in the child process
